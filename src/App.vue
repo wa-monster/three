@@ -4,8 +4,7 @@ import { TEngine } from "./ts/TEngine";
 
 const threeTarget = ref<HTMLElement>()
 onMounted(()=>{
-  const te = new TEngine(threeTarget)
-
+  const te = new TEngine(threeTarget.value!)
 })
 </script>
 
@@ -14,5 +13,8 @@ onMounted(()=>{
 </template>
 
 <style>
-
+#app,.three-canvas{
+  width: 100%;
+  height: 100%;
+}
 </style>

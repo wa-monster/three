@@ -1,5 +1,5 @@
 import THREE, { WebGLRenderer ,Scene, PerspectiveCamera, Mesh, BoxBufferGeometry, MeshStandardMaterial, Vector3, AmbientLight, AxesHelper, GridHelper} from "three";
-
+import States from 'three/examples/jsm/libs/stats.module';
 export class TEngine {
   private dom:HTMLElement
   private renderer: WebGLRenderer
@@ -42,19 +42,31 @@ export class TEngine {
 
     this.renderer = new WebGLRenderer()
     this.renderer.setSize(this.dom.offsetWidth,this.dom.offsetHeight,true)
-    this.dom.appendChild(this.renderer.domElement)
     this.renderer.setClearColor('rgb(255,255,255)')
     this.renderer.clearColor()
+    this.dom.appendChild(this.renderer.domElement)
+
+    // 初始化性能监视器
+    const states = States()
+    const statesDom = states.domElement
+    statesDom.style.position="fixed"
+    statesDom.style.top = '0'
+    statesDom.style.right = '5px'
+    statesDom.style.left = 'unset'
+    this.dom.appendChild(statesDom)
+
     // this.renderer.render(this.scene,this.camera) //渲染
     const animate = ()=>{
       box.position.x += -0.01
       box.rotation.y += 0.01
       this.camera.position.x -= 0.01
+      states.update()
       this.renderer.render(this.scene,this.camera)
       requestAnimationFrame(animate)
     }
     animate()
 
-  }
 
+
+  }
 }

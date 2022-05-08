@@ -1,5 +1,6 @@
-import THREE, { WebGLRenderer ,Scene, PerspectiveCamera, Mesh, BoxBufferGeometry, MeshStandardMaterial, Vector3, AmbientLight, AxesHelper, GridHelper} from "three";
+import THREE, { WebGLRenderer ,Scene, PerspectiveCamera, Mesh, BoxBufferGeometry, MeshStandardMaterial, Vector3, AmbientLight, AxesHelper, GridHelper, MOUSE} from "three";
 import States from 'three/examples/jsm/libs/stats.module';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 export class TEngine {
   private dom:HTMLElement
   private renderer: WebGLRenderer
@@ -54,12 +55,22 @@ export class TEngine {
     statesDom.style.right = '5px'
     statesDom.style.left = 'unset'
     this.dom.appendChild(statesDom)
+    //初始化轨道监视器 
+    const orbitControls:OrbitControls = new OrbitControls(this.camera,this.renderer.domElement)
+    // orbitControls.autoRotate = true
+    orbitControls.enableDamping = true
+    orbitControls.mouseButtons={
+      LEFT: null as unknown as MOUSE,
+      MIDDLE: MOUSE.DOLLY,
+      RIGHT: MOUSE.ROTATE,
 
+    }
     // this.renderer.render(this.scene,this.camera) //渲染
     const animate = ()=>{
-      box.position.x += -0.01
-      box.rotation.y += 0.01
-      this.camera.position.x -= 0.01
+      // box.position.x += -0.01
+      box.rotation.y += 0.001
+      // this.camera.position.x -= 0.01
+      orbitControls.update()
       states.update()
       this.renderer.render(this.scene,this.camera)
       requestAnimationFrame(animate)

@@ -41,7 +41,9 @@ export class TEngine {
     // 添加网格
     this.scene.add(gridHelper)  
 
-    this.renderer = new WebGLRenderer()
+    this.renderer = new WebGLRenderer({
+      antialias:true
+    })
     this.renderer.setSize(this.dom.offsetWidth,this.dom.offsetHeight,true)
     this.renderer.setClearColor('rgb(255,255,255)')
     this.renderer.clearColor()

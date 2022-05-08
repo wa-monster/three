@@ -43,8 +43,18 @@ export class TEngine {
     this.renderer = new WebGLRenderer()
     this.renderer.setSize(this.dom.offsetWidth,this.dom.offsetHeight,true)
     this.dom.appendChild(this.renderer.domElement)
-    // this.renderer.setClearColor('rgb(255,255,255)')
-    // this.renderer.clearColor()
-    this.renderer.render(this.scene,this.camera) //渲染
+    this.renderer.setClearColor('rgb(255,255,255)')
+    this.renderer.clearColor()
+    // this.renderer.render(this.scene,this.camera) //渲染
+    const animate = ()=>{
+      box.position.x += -0.01
+      box.rotation.y += 0.01
+      this.camera.position.x -= 0.01
+      this.renderer.render(this.scene,this.camera)
+      requestAnimationFrame(animate)
+    }
+    animate()
+
   }
+
 }
